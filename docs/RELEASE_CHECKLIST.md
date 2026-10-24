@@ -13,7 +13,7 @@ What is done, what only you can do, and the order. Tick as you go. See also [NOT
 
 ## Only you can do these (in this order)
 
-1. **Create the GitHub repository** (public, MIT) and push: `git remote add origin https://github.com/YOUR-NAME/linkbeam.git`, then `git push -u origin main --tags`. Replace `YOUR-NAME` in the README, `SELF_HOSTING.md` and `.github/ISSUE_TEMPLATE/config.yml`.
+1. **Create the GitHub repository** (public, MIT) and push: `git remote add origin https://github.com/NwaliGrant/linkbeam.git`, then `git push -u origin main --tags`. Replace `NwaliGrant` in the README, `SELF_HOSTING.md` and `.github/ISSUE_TEMPLATE/config.yml`.
 2. **Switch on** private vulnerability reporting (repository Settings, Security) and replace `security@YOUR-DOMAIN` in `SECURITY.md` and `conduct@YOUR-DOMAIN` in `CODE_OF_CONDUCT.md` (B-037).
 3. **Create the accounts** (all free, no card): Cloudflare, Brevo (verify a sender address) and a Cloudflare Turnstile widget. Follow [SELF_HOSTING.md](SELF_HOSTING.md) steps 1 to 6.
 4. **Run OSV-Scanner** on a normal connection: `osv-scanner scan source -L pnpm-lock.yaml` (B-036).

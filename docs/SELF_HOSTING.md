@@ -13,7 +13,7 @@ You need Node 20 or newer (22 recommended), Git and pnpm.
 **Windows (PowerShell):**
 
 ```powershell
-git clone https://github.com/YOUR-NAME/linkbeam.git
+git clone https://github.com/NwaliGrant/linkbeam.git
 cd linkbeam
 .\scripts\setup.ps1
 ```
@@ -21,7 +21,7 @@ cd linkbeam
 **macOS or Linux:**
 
 ```bash
-git clone https://github.com/YOUR-NAME/linkbeam.git
+git clone https://github.com/NwaliGrant/linkbeam.git
 cd linkbeam
 pnpm install && pnpm check
 ```
@@ -53,7 +53,7 @@ Local data lives in `apps/api/.wrangler/`. Delete that folder to start again fro
 
 ## Part 2. Put it on the internet for free (Cloudflare)
 
-Linkbeam runs as **one Cloudflare Worker** that serves both the website files and the API, so they share one address (for example `https://linkbeam.your-name.workers.dev`). That is required: the site and the API must be on the same host (see D-013 and D-062 in [DECISIONS.md](DECISIONS.md)).
+Linkbeam runs as **one Cloudflare Worker** that serves both the website files and the API, so they share one address (for example `https://linkbeam.NwaliGrant.workers.dev`). That is required: the site and the API must be on the same host (see D-013 and D-062 in [DECISIONS.md](DECISIONS.md)).
 
 What you need (all free, no card):
 
@@ -76,10 +76,10 @@ A browser window opens. Approve it. (On macOS and Linux the commands are the sam
 
 ### Step 2. Choose your address
 
-In the Cloudflare dashboard open **Workers & Pages** and, if asked, choose your **workers.dev subdomain** (for example `your-name`). Your site will then be:
+In the Cloudflare dashboard open **Workers & Pages** and, if asked, choose your **workers.dev subdomain** (for example `NwaliGrant`). Your site will then be:
 
 ```
-https://linkbeam.your-name.workers.dev
+https://linkbeam.NwaliGrant.workers.dev
 ```
 
 Write it down. It is your `APP_URL`. If you would rather not choose first, deploy once (Step 8) and Wrangler will ask you to choose; then change `APP_URL` and deploy again.
@@ -100,7 +100,7 @@ pnpm exec wrangler d1 migrations apply linkbeam --remote -c wrangler.deploy.toml
 
 ### Step 4. Set up the bot check (Cloudflare Turnstile)
 
-In the dashboard open **Turnstile**, choose **Add widget**, give it any name, add your site's host name (for example `linkbeam.your-name.workers.dev`, no `https://`), and pick **Managed**. You get two keys:
+In the dashboard open **Turnstile**, choose **Add widget**, give it any name, add your site's host name (for example `linkbeam.NwaliGrant.workers.dev`, no `https://`), and pick **Managed**. You get two keys:
 
 - the **site key** (public). Put it in `apps/web/.env`, like this (the file is ignored by Git):
 
@@ -144,8 +144,8 @@ Optional Google and GitHub sign-in: create the apps yourself, register the redir
 Put these in `apps/web/.env` (not secret, they are shown on the website):
 
 ```
-PUBLIC_SITE_URL=https://linkbeam.your-name.workers.dev
-PUBLIC_REPO_URL=https://github.com/YOUR-NAME/linkbeam
+PUBLIC_SITE_URL=https://linkbeam.NwaliGrant.workers.dev
+PUBLIC_REPO_URL=https://github.com/NwaliGrant/linkbeam
 PUBLIC_CONTACT_EMAIL=you@your-domain.example
 ```
 

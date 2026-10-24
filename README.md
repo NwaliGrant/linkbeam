@@ -20,7 +20,7 @@ Linkbeam is free tools for creators everywhere. It is built with Nigerian users 
 
 ## What you get
 
-- **A fast public page** at `/u/your-name`: about 78 KB in total, almost no JavaScript, Lighthouse 99 to 100 on a throttled phone. Works from 320 px wide, and has a dark theme (Ink).
+- **A fast public page** at `/u/NwaliGrant`: about 78 KB in total, almost no JavaScript, Lighthouse 99 to 100 on a throttled phone. Works from 320 px wide, and has a dark theme (Ink).
 - **Buttons that get work done:** website, WhatsApp (with an optional first message), Buy me a coffee (optional), phone call, email and map.
 - **A dashboard** with autosave, drag-and-drop or button reordering, 8 themes, your own button colour, button shapes, font pairs and backgrounds, a live preview, link scheduling (show between two dates) and an avatar upload.
 - **Share tools:** copy link, a QR code (PNG and SVG), and share buttons that load no third-party scripts.
@@ -36,14 +36,14 @@ You need Node 20 or newer (22 recommended), Git and pnpm.
 
 ```powershell
 # Windows PowerShell
-git clone https://github.com/YOUR-NAME/linkbeam.git
+git clone https://github.com/NwaliGrant/linkbeam.git
 cd linkbeam
 .\scripts\setup.ps1
 ```
 
 ```bash
 # macOS or Linux
-git clone https://github.com/YOUR-NAME/linkbeam.git
+git clone https://github.com/NwaliGrant/linkbeam.git
 cd linkbeam
 pnpm install && pnpm check
 ```
