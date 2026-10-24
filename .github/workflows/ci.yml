@@ -38,6 +38,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @linkbeam/e2e exec playwright install --with-deps chromium
+      # Two browser test files check the built site, so build it first.
+      - run: pnpm --filter @linkbeam/web build
       - run: pnpm e2e
       - uses: actions/upload-artifact@v4
         if: failure()
