@@ -7,7 +7,7 @@ Linkbeam is free and open source. Thank you for helping keep it safe.
 Please do **not** open a public issue for a security problem.
 
 1. Use GitHub's private reporting: open the **Security** tab of this repository and choose **Report a vulnerability**. (The owner must switch on "Private vulnerability reporting" in the repository settings. This is listed in the release checklist.)
-2. If you cannot use GitHub, email **security@YOUR-DOMAIN** (placeholder: the owner replaces this with a real address before release).
+2. If you cannot use GitHub, email **nwaligrant@gmail.com** (placeholder: the owner replaces this with a real address before release).
 
 Please include: what you found, the steps to repeat it, and what you think the impact is. A short script or a few `curl` lines is ideal.
 

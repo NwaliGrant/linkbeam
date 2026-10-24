@@ -60,7 +60,7 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-**conduct@YOUR-DOMAIN** (the project owner replaces this placeholder with a real
+**nwaligrant@gmail.com** (the project owner replaces this placeholder with a real
 address before release; until then, use the private "Report a vulnerability"
 form on the repository's Security tab and say that it is a conduct report).
 All complaints will be reviewed and investigated promptly and fairly.
