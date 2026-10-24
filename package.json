@@ -1,0 +1,32 @@
+{
+  "name": "linkbeam",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Linkbeam: a free, open-source link-in-bio platform.",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel --filter @linkbeam/api --filter @linkbeam/web dev",
+    "dev:api": "pnpm --filter @linkbeam/api dev",
+    "dev:web": "pnpm --filter @linkbeam/web dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "test": "pnpm -r test",
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build",
+    "e2e": "pnpm --filter @linkbeam/e2e e2e",
+    "lighthouse": "pnpm --filter @linkbeam/e2e lighthouse"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.2",
+    "vitest": "^5.0.5"
+  }
+}

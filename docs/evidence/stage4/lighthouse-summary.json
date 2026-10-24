@@ -1,0 +1,88 @@
+{
+  "tool": "lighthouse 13.5.0, mobile profile with simulated slow-4G and 4x CPU slowdown, against localhost",
+  "results": {
+    "public-page": {
+      "url": "http://localhost:4321/u/<username>",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp_ms": 1539,
+        "cls": 0,
+        "tbt_ms": 25,
+        "fcp_ms": 736,
+        "total_bytes": 83607
+      },
+      "audits_below_100": [
+        "max-potential-fid: 0.99",
+        "bf-cache: 0"
+      ]
+    },
+    "landing": {
+      "url": "http://localhost:4322/",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp_ms": 1507,
+        "cls": 0,
+        "tbt_ms": 0,
+        "fcp_ms": 1057,
+        "total_bytes": 85168
+      },
+      "audits_below_100": [
+        "bf-cache: 0",
+        "network-dependency-tree-insight: 0",
+        "render-blocking-insight: 0"
+      ]
+    },
+    "terms": {
+      "url": "http://localhost:4322/terms",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp_ms": 1508,
+        "cls": 0,
+        "tbt_ms": 0,
+        "fcp_ms": 1058,
+        "total_bytes": 85290
+      },
+      "audits_below_100": [
+        "bf-cache: 0",
+        "network-dependency-tree-insight: 0",
+        "render-blocking-insight: 0"
+      ]
+    },
+    "privacy": {
+      "url": "http://localhost:4322/privacy",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "lcp_ms": 1355,
+        "cls": 0,
+        "tbt_ms": 0,
+        "fcp_ms": 1055,
+        "total_bytes": 85557
+      },
+      "audits_below_100": [
+        "bf-cache: 0",
+        "network-dependency-tree-insight: 0",
+        "render-blocking-insight: 0"
+      ]
+    }
+  }
+}

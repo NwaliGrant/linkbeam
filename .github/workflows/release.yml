@@ -1,0 +1,76 @@
+name: Release
+
+# Runs when you push a version tag such as v1.0.0. It re-runs every check, then (only if they pass and you approve
+# the "production" environment) updates the database, deploys the Worker and smoke-tests the live site.
+# NOT TESTED on GitHub yet: see docs/NOT_TESTED.md and docs/RELEASE_CHECKLIST.md.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+env:
+  WRANGLER_SEND_METRICS: "false"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm audit --audit-level=moderate
+      - run: node scripts/licenses.mjs
+      - run: pnpm --filter @linkbeam/e2e exec playwright install --with-deps chromium
+      - run: pnpm e2e
+      - run: pnpm lighthouse
+
+  deploy:
+    needs: verify
+    runs-on: ubuntu-latest
+    # Create this environment in the repository settings and add yourself as a required reviewer.
+    environment: production
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build the website
+        env:
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
+          PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
+          PUBLIC_REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+          PUBLIC_CONTACT_EMAIL: ${{ vars.PUBLIC_CONTACT_EMAIL }}
+        run: pnpm --filter @linkbeam/web build
+      - name: Update the database
+        working-directory: apps/api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: pnpm exec wrangler d1 migrations apply linkbeam --remote -c wrangler.deploy.toml
+      - name: Deploy
+        working-directory: apps/api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: pnpm exec wrangler deploy -c wrangler.deploy.toml
+      - name: Smoke test the live site
+        run: node scripts/smoke.mjs "${{ vars.SITE_URL }}"
+      - name: Publish the release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v v="$version" '$0 ~ "^## \\["v"\\]" {on=1; next} /^## \[/ {on=0} on' CHANGELOG.md > notes.md
+          gh release create "$GITHUB_REF_NAME" --title "Linkbeam $GITHUB_REF_NAME" --notes-file notes.md

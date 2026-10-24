@@ -1,0 +1,58 @@
+---
+import "../styles/fonts.css";
+import "../styles/tokens.css";
+import "../styles/site.css";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+}
+const { title, description, path } = Astro.props;
+const repo = import.meta.env.PUBLIC_REPO_URL ?? "";
+const origin = (import.meta.env.PUBLIC_SITE_URL ?? "").replace(/\/+$/, "");
+const canonical = origin ? `${origin}${path}` : "";
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="theme-color" content="#F6FAF4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0E1A13" media="(prefers-color-scheme: dark)" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {origin && <meta property="og:image" content={`${origin}/og-default.png`} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="wrap site-header">
+      <a class="logo" href="/">Linkbeam</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="/signin">Sign in</a>
+        <a class="btn" href="/signin">Create your page</a>
+      </nav>
+    </header>
+    <slot />
+    <footer class="wrap site-footer">
+      <span>Linkbeam is free and open source (MIT licence). © {year}</span>
+      <nav aria-label="Legal">
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+        {repo && <a href={repo}>Source code</a>}
+      </nav>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "@linkbeam/e2e",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "e2e": "playwright test",
+    "typecheck": "tsc -p tsconfig.json",
+    "screenshots": "playwright test screens.spec.ts",
+    "lighthouse": "playwright test -c playwright.lighthouse.config.ts"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "@types/pngjs": "^6.0.5",
+    "jsqr": "^1.4.0",
+    "lighthouse": "^13.5.0",
+    "pngjs": "^7.0.0",
+    "sharp": "^0.35.5",
+    "typescript": "~6.0.3"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@linkbeam/api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "build": "wrangler deploy --dry-run --outdir dist"
+  },
+  "dependencies": {
+    "@linkbeam/shared": "workspace:*",
+    "arctic": "^3.7.0",
+    "hono": "^4.13.13",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261015.1",
+    "@types/node": "^26.6.5",
+    "@vitest/coverage-v8": "^5.0.5",
+    "miniflare": "^4.20260730.0",
+    "sharp": "^0.35.5",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.5",
+    "wrangler": "^4.151.0",
+    "yaml": "^2.9.1"
+  }
+}

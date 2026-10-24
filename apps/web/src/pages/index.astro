@@ -1,0 +1,57 @@
+---
+import Site from "../layouts/Site.astro";
+---
+
+<Site title="Linkbeam: one link for everything you do" description="Make a free page with all your links, WhatsApp, Buy me a coffee and phone buttons. No ads, no fees, open source." path="/">
+  <main id="main">
+    <div class="wrap hero">
+      <div>
+        <h1>One link for everything you do.</h1>
+        <p class="lead">Put your website, WhatsApp, coffee link and phone number on one clean page. Share one link in your bio. It is free, fast on slow phones, and open source.</p>
+        <div class="cta-row">
+          <a class="btn" href="/signin">Create your page</a>
+          <a class="btn btn-quiet" href="#how">See how it works</a>
+        </div>
+        <p class="fine">No credit card. No ads. Sign in with your email.</p>
+      </div>
+      <div class="sample" aria-hidden="true">
+        <div class="face">A</div>
+        <strong>Ada’s Bakery</strong>
+        <p>Cakes and small chops in Lagos</p>
+        <span class="fake">Order on WhatsApp</span>
+        <span class="fake">Pay for your order</span>
+        <span class="fake">Find our shop</span>
+        <span class="fake">Call us</span>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <section aria-labelledby="why">
+        <h2 id="why">Made for real businesses and creators</h2>
+        <div class="grid">
+          <div class="tile"><h3>Free, with no catch</h3><p>No paid plans, no ads and no tracking. The code is open, so you can read it or run your own copy.</p></div>
+          <div class="tile"><h3>Fast on any phone</h3><p>Your page is plain, light HTML. It opens quickly on low-cost phones and slow data.</p></div>
+          <div class="tile"><h3>Buttons that get work done</h3><p>WhatsApp chat, Buy me a coffee, phone call, email and map buttons, built in.</p></div>
+          <div class="tile"><h3>Your look</h3><p>Pick a theme, colour, button shape and font. See the change as you make it.</p></div>
+          <div class="tile"><h3>Share anywhere</h3><p>Copy your link, or download a QR code for a card, a flyer or a shop window.</p></div>
+          <div class="tile"><h3>Simple numbers</h3><p>See how many people visit and which links they tap. We count visits, not people.</p></div>
+        </div>
+      </section>
+
+      <section id="how" aria-labelledby="how-title">
+        <h2 id="how-title">Ready in about three minutes</h2>
+        <ol class="how">
+          <li><div><strong>Sign in</strong>Enter your email and tap the link we send. There is no password.</div></li>
+          <li><div><strong>Add your links</strong>Choose a username, add your links and pick how the page looks.</div></li>
+          <li><div><strong>Share your link</strong>Put it in your Instagram, TikTok or WhatsApp bio.</div></li>
+        </ol>
+      </section>
+
+      <section class="band" aria-labelledby="start">
+        <h2 id="start">Make your page today</h2>
+        <p>It takes less time than writing your bio.</p>
+        <a class="btn" href="/signin">Create your page</a>
+      </section>
+    </div>
+  </main>
+</Site>

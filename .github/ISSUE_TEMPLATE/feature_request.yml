@@ -1,0 +1,32 @@
+name: Feature request
+description: An idea to make Linkbeam better
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Linkbeam stays **fast, free, accessible and private**, and has **no payment features**. Ideas that fit those four rules are easiest to accept.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Who has this problem, and when?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: cost
+    attributes:
+      label: Does it affect speed, cost or privacy?
+      description: For example more JavaScript on the public page, more database writes, or more personal data kept.
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Can you help?
+      options:
+        - label: I would like to build this myself

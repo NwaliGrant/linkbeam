@@ -1,0 +1,46 @@
+name: Bug report
+description: Something does not work as it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for telling us. **Do not report security problems here.** Use the "Report a vulnerability" button on the Security tab (see SECURITY.md).
+        Please do not paste passwords, API keys or sign-in links.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Say what you did, what you expected, and what you saw instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to repeat it
+      placeholder: |
+        1. Open the dashboard
+        2. Add a link
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and browser
+      placeholder: "Example: Tecno Spark 10, Chrome 130, Android 13"
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where did it happen?
+      options:
+        - On my own computer (running it locally)
+        - On a site I host
+        - On a site run by someone else
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: A screenshot helps. Remove personal details first.

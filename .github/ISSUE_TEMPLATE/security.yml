@@ -1,0 +1,24 @@
+name: Security problem (do not use this form)
+description: Please report security problems privately instead
+labels: [security-redirect]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Please do not report a security problem in a public issue.
+        A public report can put people at risk before it is fixed.
+
+        **Report it privately:**
+        1. Open the **Security** tab of this repository.
+        2. Choose **Report a vulnerability**.
+
+        Read [SECURITY.md](../blob/main/SECURITY.md) for what to include, what to expect, and the rules for testing.
+        Test only your own copy of Linkbeam. Thank you for helping keep it safe.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: This is not a security problem
+      description: Only submit this form if you are sure it is not. Otherwise use the private report.
+      options:
+        - label: I checked, and this is not a security problem
+          required: true

@@ -1,0 +1,17 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "tests/*"
+
+onlyBuiltDependencies:
+  - esbuild
+  - workerd
+  - sharp
+
+# Security: dev tools bring old copies of these packages with known problems (pnpm audit): Miniflare brings undici and
+# sharp, and the Astro language server (@astrojs/check) brings fast-uri.
+# They are only used on a developer's machine and in CI, never in the deployed Worker. Pinning newer ones closes the findings.
+overrides:
+  undici: ">=7.29.1"
+  sharp: ">=0.35.5"
+  fast-uri: ">=3.1.9"

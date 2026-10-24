@@ -1,0 +1,8 @@
+# Settings for gitleaks (secret scanner). Only one exception, and it is a false alarm.
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Stage 5 test file listed migration file names next to a short word; the match was the file name, not a key (SL-009). That test file was rewritten in the next commit."
+commits = ["7668b1b8720c082eda9645f2c00bfe8241a00029"]
+paths = ['''apps/api/test/business-buttons\.test\.ts''']

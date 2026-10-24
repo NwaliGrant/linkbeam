@@ -1,0 +1,58 @@
+---
+import Site from "../layouts/Site.astro";
+const contact = import.meta.env.PUBLIC_CONTACT_EMAIL ?? "";
+---
+
+<Site title="Privacy | Linkbeam" description="What Linkbeam stores about you and your visitors, and why." path="/privacy">
+  <main id="main" class="wrap doc">
+    <h1>Privacy</h1>
+    <p class="updated">Last updated: 24 October 2026</p>
+    <p>We keep as little as we can. There are no ads, no tracking pixels and no selling of data. This page lists everything we store.</p>
+
+    <h2>If you make a page</h2>
+    <table>
+      <thead><tr><th scope="col">What</th><th scope="col">Why</th><th scope="col">Who can see it</th></tr></thead>
+      <tbody>
+        <tr><td>Your email address</td><td>To sign you in</td><td>Only you and us. It is never on your page.</td></tr>
+        <tr><td>Username, name, bio, photo, links, theme</td><td>To show your page</td><td>Everyone. This is your public page.</td></tr>
+        <tr><td>Sign-in sessions</td><td>To keep you signed in</td><td>Only us. Stored scrambled, not readable.</td></tr>
+        <tr><td>Reports about your page</td><td>To keep Linkbeam safe</td><td>Only us. Without the reporter’s identity.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>If you only visit a page</h2>
+    <p>We count page views and link taps for the page owner, as a number for each day. The count does not hold your name, your device or your network address. The public page uses no cookies.</p>
+
+    <h2>Cookies</h2>
+    <p>We use one cookie, and only when you sign in. It keeps you signed in. We do not use advertising or tracking cookies.</p>
+
+    <h2>Saved on your device (offline use)</h2>
+    <p>When you use the dashboard, your browser keeps a copy of your profile and links, and any edits that have not been sent yet, so the dashboard can open and work without a connection. This copy stays on your device and is removed when you sign out or delete your account. The dashboard also saves its own page files so it can open offline; these hold none of your information. <strong>On a shared computer, sign out when you finish.</strong></p>
+
+    <h2>Safety records</h2>
+    <ul>
+      <li>To stop abuse, we limit how often one network can sign up or send reports. We store the network address only in scrambled form, mixed with a secret, so we cannot read it back.</li>
+      <li>A short security log records actions like signing in, signing out, and deleting an account, with the date. It is deleted after 90 days.</li>
+    </ul>
+
+    <h2>Other companies we use</h2>
+    <ul>
+      <li><strong>Cloudflare</strong> hosts the site and the database. On the sign-in and report pages it also runs a check that you are a person (Turnstile).</li>
+      <li>An <strong>email delivery service</strong> sends your sign-in link.</li>
+      <li><strong>Google or GitHub</strong>, only if you choose to sign in with them. We receive your verified email address from them, and nothing else.</li>
+    </ul>
+    <p>Visitors who tap a link on your page go to the website you linked. That website has its own rules.</p>
+
+    <h2>Your choices</h2>
+    <ul>
+      <li><strong>Download</strong> everything we hold about you: Settings, then Export data.</li>
+      <li><strong>Delete</strong> your account: Settings, then Delete account. Your page, links, photo and counts are removed at once.</li>
+      <li><strong>Sign out everywhere</strong>: Settings, then Sign out of all devices.</li>
+      <li>Hide the “Made with Linkbeam” link in the Design tab.</li>
+    </ul>
+
+    <h2>Questions</h2>
+    {contact ? <p><a class="btn btn-quiet" href={`mailto:${contact}`}>Write to {contact}</a></p> : <p>Open an issue in the project’s public repository, or use the <strong>Report this page</strong> link on a page.</p>}
+    <p>We will update this page, and its date, if our practice changes.</p>
+  </main>
+</Site>

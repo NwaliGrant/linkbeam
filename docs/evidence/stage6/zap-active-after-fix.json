@@ -1,0 +1,713 @@
+{
+	"@programName": "ZAP",
+	"@version": "2.16.1",
+	"@generated": "Fri, 23 Oct 2026 09:42:59",
+	"site":[ 
+		{
+			"@name": "http://127.0.0.1:8787",
+			"@host": "127.0.0.1",
+			"@port": "8787",
+			"@ssl": "false",
+			"alerts": [ 
+				{
+					"pluginid": "10096",
+					"alertRef": "10096",
+					"alert": "Timestamp Disclosure - Unix",
+					"name": "Timestamp Disclosure - Unix",
+					"riskcode": "1",
+					"confidence": "1",
+					"riskdesc": "Low (Low)",
+					"desc": "<p>A timestamp was disclosed by the application/web server. - Unix</p>",
+					"instances":[ 
+						{
+							"id": "0",
+							"uri": "http://127.0.0.1:8787/api/v1/me",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "1792744925",
+							"otherinfo": "1792744925, which evaluates to: 2026-10-23 09:42:05."
+						}
+					],
+					"count": "1",
+					"solution": "<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>",
+					"otherinfo": "<p>1792744925, which evaluates to: 2026-10-23 09:42:05.</p>",
+					"reference": "<p>https://cwe.mitre.org/data/definitions/200.html</p>",
+					"cweid": "497",
+					"wascid": "13",
+					"sourceid": "15"
+				},
+				{
+					"pluginid": "10104",
+					"alertRef": "10104",
+					"alert": "User Agent Fuzzer",
+					"name": "User Agent Fuzzer",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>Check for differences in response based on fuzzed User Agent (eg. mobile sites, access as a Search Engine Crawler). Compares the response statuscode and the hashcode of the response body with the original response.</p>",
+					"instances":[ 
+						{
+							"id": "39",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "38",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "37",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "40",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "41",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "49",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "47",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "42",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "44",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "46",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "45",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "43",
+							"uri": "http://127.0.0.1:8787/api/v1/me/stats?days=7",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "msnbot/1.1 (+http://search.msn.com/msnbot.htm)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "52",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "51",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "48",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "54",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "56",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "70",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "68",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "58",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "62",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "66",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "64",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "60",
+							"uri": "http://127.0.0.1:8787/api/v1/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "msnbot/1.1 (+http://search.msn.com/msnbot.htm)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "55",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "53",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "50",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "57",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "59",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "72",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "71",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "61",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "65",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "69",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "67",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "63",
+							"uri": "http://127.0.0.1:8787/u/scanme",
+							"method": "GET",
+							"param": "Header User-Agent",
+							"attack": "msnbot/1.1 (+http://search.msn.com/msnbot.htm)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "8",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "5",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "1",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "13",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "16",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "36",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "33",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "19",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "25",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "30",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "27",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "20",
+							"uri": "http://127.0.0.1:8787/api/v1/auth/magic-link",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "msnbot/1.1 (+http://search.msn.com/msnbot.htm)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "7",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "6",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "3",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "10",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "14",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "35",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "34",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "18",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "24",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "32",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "28",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "21",
+							"uri": "http://127.0.0.1:8787/api/v1/report",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "msnbot/1.1 (+http://search.msn.com/msnbot.htm)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "9",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "4",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "2",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "11",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "12",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "31",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "29",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "15",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "22",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "26",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "23",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "17",
+							"uri": "http://127.0.0.1:8787/api/v1/track",
+							"method": "POST",
+							"param": "Header User-Agent",
+							"attack": "msnbot/1.1 (+http://search.msn.com/msnbot.htm)",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "72",
+					"solution": "",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/wstg</p>",
+					"cweid": "0",
+					"wascid": "0",
+					"sourceid": "2095"
+				}
+			]
+		}
+	],
+	"sequences":[
+	]
+
+}

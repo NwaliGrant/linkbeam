@@ -1,0 +1,35 @@
+# Used only to DEPLOY. It serves the website and the API from one free Cloudflare Worker, on one address,
+# which is what Linkbeam needs (the site and /api must share a host, see D-013 and D-062).
+# Local development keeps using wrangler.toml, so it does not need the website to be built first.
+#
+# Deploy (after the steps in docs/SELF_HOSTING.md):
+#   pnpm build
+#   cd apps/api && pnpm exec wrangler deploy -c wrangler.deploy.toml
+name = "linkbeam"
+main = "src/index.ts"
+compatibility_date = "2026-08-01"
+
+# The built website. Cloudflare serves these files itself, free and without running the Worker.
+# "/api/*" and "/u/*" go to the Worker first. Everything else is a file, or the friendly 404 page.
+[assets]
+directory = "../web/dist"
+binding = "ASSETS"
+not_found_handling = "404-page"
+run_worker_first = ["/api/*", "/u/*"]
+
+# Paste the id printed by:  pnpm exec wrangler d1 create linkbeam
+[[d1_databases]]
+binding = "DB"
+database_name = "linkbeam"
+database_id = "PASTE-YOUR-DATABASE-ID-HERE"
+migrations_dir = "../../migrations"
+
+[triggers]
+crons = ["17 3 * * *"]
+
+# Public settings. Secrets are NOT written here. Set them with:  pnpm exec wrangler secret put NAME
+[vars]
+# The address of your site, with https:// and no slash at the end. Example: https://linkbeam.your-name.workers.dev
+APP_URL = "https://CHANGE-ME.workers.dev"
+# "brevo" sends real sign-in emails (needs the BREVO_API_KEY secret). Never use "console" on a live site.
+MAIL_MODE = "brevo"

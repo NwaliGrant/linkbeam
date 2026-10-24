@@ -1,0 +1,9 @@
+---
+import Base from "../layouts/Base.astro";
+import ReportForm from "../components/ReportForm";
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+---
+
+<Base title="Report a page | Linkbeam">
+  <ReportForm client:load turnstileSiteKey={siteKey} />
+</Base>

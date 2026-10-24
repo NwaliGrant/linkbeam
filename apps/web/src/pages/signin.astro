@@ -1,0 +1,9 @@
+---
+import Base from "../layouts/Base.astro";
+import SignIn from "../components/SignIn";
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+---
+
+<Base title="Sign in to Linkbeam">
+  <SignIn client:load turnstileSiteKey={siteKey} />
+</Base>

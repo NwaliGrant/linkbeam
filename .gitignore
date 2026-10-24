@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+.dev.vars
+.env
+.env.*
+!.env.example
+*.log
+coverage/
+.DS_Store
+Thumbs.db
+.e2e/
+test-results/
+playwright-report/
+backup-*.sql
+docs/evidence/stage7/demo-frames/

@@ -1,0 +1,49 @@
+---
+import Site from "../layouts/Site.astro";
+const contact = import.meta.env.PUBLIC_CONTACT_EMAIL ?? "";
+---
+
+<Site title="Terms of use | Linkbeam" description="The simple rules for using Linkbeam." path="/terms">
+  <main id="main" class="wrap doc">
+    <h1>Terms of use</h1>
+    <p class="updated">Last updated: 20 October 2026</p>
+    <p>These are the rules for using Linkbeam. We wrote them in plain words. By making a page, you agree to them.</p>
+
+    <h2>What Linkbeam is</h2>
+    <p>Linkbeam lets you make one public page that holds your links. It is free. The software is open source under the MIT licence, and these terms are about the service we run, not about the code.</p>
+
+    <h2>Your page and your content</h2>
+    <ul>
+      <li>You own what you put on your page. You are responsible for it.</li>
+      <li>Your page is public. Anyone with the link can see it, and search engines may list it.</li>
+      <li>Only add links and details you have the right to share.</li>
+      <li>Keep your sign-in email safe. Anyone who can read it can sign in as you.</li>
+    </ul>
+
+    <h2>What you must not do</h2>
+    <ul>
+      <li>Do not link to scams, fake payment pages, malware or phishing pages.</li>
+      <li>Do not pretend to be another person or business.</li>
+      <li>Do not post anything illegal, or anything that threatens, harasses or targets people.</li>
+      <li>Do not share sexual content involving children. We report this to the authorities.</li>
+      <li>Do not try to break, overload or get around the service or its limits.</li>
+      <li>Do not use usernames to take advantage of a name that belongs to someone else.</li>
+    </ul>
+
+    <h2>Reports and removal</h2>
+    <p>Every page has a <strong>Report this page</strong> link. A person reads each report. We may hide or remove a page, or close an account, when these rules are broken. We try to be fair, but we can act quickly when people may be harmed.</p>
+
+    <h2>Your data</h2>
+    <p>You can download your data and delete your account at any time in Settings. Deleting removes your page, links, photo and counts. The Privacy page explains what we store.</p>
+    <p><a class="btn btn-quiet" href="/privacy">Read the Privacy page</a></p>
+
+    <h2>No promises about uptime</h2>
+    <p>The service is free and run with care, but it is provided “as is”. It may be slow, change or stop. We do not promise it will always work, and we are not responsible for losses from it not working. Keep your own copy of anything important. Use <strong>Export data</strong> in Settings.</p>
+
+    <h2>Changes</h2>
+    <p>We may change these terms. When we do, we change the date above. If you keep using Linkbeam after a change, you accept the new terms.</p>
+
+    <h2>Contact</h2>
+    {contact ? <p><a class="btn btn-quiet" href={`mailto:${contact}`}>Write to {contact}</a></p> : <p>Use the <strong>Report this page</strong> link on a page, or open an issue in the project’s public repository.</p>}
+  </main>
+</Site>

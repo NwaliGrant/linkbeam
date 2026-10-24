@@ -1,0 +1,8 @@
+---
+import Base from "../layouts/Base.astro";
+import Dashboard from "../components/Dashboard";
+---
+
+<Base title="Your Linkbeam dashboard">
+  <Dashboard client:only="preact" />
+</Base>

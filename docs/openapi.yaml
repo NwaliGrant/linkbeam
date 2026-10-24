@@ -1,0 +1,456 @@
+openapi: 3.0.3
+info:
+  title: Linkbeam API
+  version: 0.1.0
+  description: |
+    JSON API for Linkbeam. Served under /api/v1 on the same host as the site, so the session cookie is first-party.
+    Every error uses the same shape: {"error":{"code":"...","message":"..."}}.
+    A test (apps/api/test/openapi.test.ts) fails if this file and the real routes disagree.
+    Every POST, PUT, PATCH and DELETE must come from this site: the browser's Origin header has to match the site,
+    or the browser must send Sec-Fetch-Site: same-origin. Anything else gets 403 csrf_blocked.
+    Rate-limited endpoints answer 429 rate_limited with a Retry-After header.
+servers:
+  - url: http://127.0.0.1:8787
+    description: Local development
+tags:
+  - name: Auth
+  - name: Profile
+  - name: Links
+  - name: Public
+paths:
+  /api/v1/health:
+    get:
+      tags: [Public]
+      summary: Health check
+      responses:
+        "200":
+          description: The API is running.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  service: { type: string }
+  /api/v1/auth/magic-link:
+    post:
+      tags: [Auth]
+      summary: Email a single-use sign-in link
+      description: Always answers 202, whether or not the email has an account.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email: { type: string, format: email, maxLength: 254 }
+                turnstile_token: { type: string, maxLength: 2048, description: Cloudflare Turnstile response token. }
+      responses:
+        "202": { description: A link was sent if the address can receive one., content: { application/json: { schema: { $ref: "#/components/schemas/Ok" } } } }
+        "400": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "413": { $ref: "#/components/responses/Error" }
+        "415": { $ref: "#/components/responses/Error" }
+        "429": { $ref: "#/components/responses/Error" }
+  /api/v1/auth/callback:
+    get:
+      tags: [Auth]
+      summary: Use a sign-in link
+      description: Single use, expires after 15 minutes. Always redirects to a fixed address on this site.
+      parameters:
+        - { name: token, in: query, required: true, schema: { type: string } }
+      responses:
+        "302": { description: "Redirect to /dashboard with a session cookie, or to /signin?error=invalid_link or rate_limited." }
+        "429": { $ref: "#/components/responses/Error" }
+  /api/v1/auth/{provider}/start:
+    get:
+      tags: [Auth]
+      summary: Start Google or GitHub sign-in
+      description: |
+        Provider is google or github. Sets a short-lived state cookie and redirects to the provider.
+        An unknown or unconfigured provider redirects to /signin?error=provider_unavailable. There is no "next" parameter.
+      parameters:
+        - { name: provider, in: path, required: true, schema: { type: string, enum: [google, github] } }
+      responses:
+        "302": { description: Redirect to the provider, or to /signin?error=provider_unavailable. }
+        "429": { $ref: "#/components/responses/Error" }
+  /api/v1/auth/{provider}/callback:
+    get:
+      tags: [Auth]
+      summary: Finish Google or GitHub sign-in
+      description: |
+        The state in the query must match the state cookie set by the start request, and can be used once.
+        Only an email the provider has verified is accepted.
+      parameters:
+        - { name: provider, in: path, required: true, schema: { type: string, enum: [google, github] } }
+        - { name: code, in: query, required: true, schema: { type: string } }
+        - { name: state, in: query, required: true, schema: { type: string } }
+      responses:
+        "302": { description: "Redirect to /dashboard with a session cookie, or to /signin?error=invalid_link or rate_limited." }
+        "429": { $ref: "#/components/responses/Error" }
+  /api/v1/auth/logout-all:
+    post:
+      tags: [Auth]
+      summary: Sign out on every device
+      security: [{ session: [] }]
+      responses:
+        "204": { description: Every session of this account is destroyed. }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+  /api/v1/auth/logout:
+    post:
+      tags: [Auth]
+      summary: Sign out and destroy the session
+      security: [{ session: [] }]
+      responses:
+        "204": { description: Signed out. }
+        "401": { $ref: "#/components/responses/Error" }
+  /api/v1/me:
+    get:
+      tags: [Profile]
+      summary: Read my profile
+      security: [{ session: [] }]
+      responses:
+        "200": { description: My profile., content: { application/json: { schema: { $ref: "#/components/schemas/Profile" } } } }
+        "401": { $ref: "#/components/responses/Error" }
+    patch:
+      tags: [Profile]
+      summary: Update my profile
+      description: Unknown fields are ignored. A username can be changed once every 7 days.
+      security: [{ session: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: { type: string, minLength: 3, maxLength: 30, pattern: "^[a-z0-9_-]+$" }
+                display_name: { type: string, maxLength: 60 }
+                bio: { type: string, maxLength: 160 }
+                theme: { type: string, enum: [forest, lime, sunset, ink, paper, mint, amber, sky] }
+                accent: { type: string, nullable: true, pattern: "^#[0-9a-fA-F]{6}$" }
+                button_shape: { type: string, enum: [pill, rounded, square] }
+                font_pair: { type: string, enum: [friendly, clean] }
+                bg_style: { type: string, enum: [solid, gradient, pattern] }
+                show_badge: { type: boolean, description: Show the small "Made with Linkbeam" link. }
+      responses:
+        "200": { description: The updated profile., content: { application/json: { schema: { $ref: "#/components/schemas/Profile" } } } }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+        "429": { $ref: "#/components/responses/Error" }
+    delete:
+      tags: [Profile]
+      summary: Delete my account and all my data
+      description: Needs a sign-in from the last 10 minutes. Deletion is permanent.
+      security: [{ session: [] }]
+      responses:
+        "204": { description: Deleted. }
+        "401": { $ref: "#/components/responses/Error" }
+  /api/v1/me/avatar:
+    post:
+      tags: [Profile]
+      summary: Upload a profile photo
+      description: JPEG, PNG or WebP, up to 1 MB and 4096 pixels per side. Metadata is removed.
+      security: [{ session: [] }]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file: { type: string, format: binary }
+      responses:
+        "201": { description: Saved., content: { application/json: { schema: { type: object, properties: { avatar_url: { type: string } } } } } }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "413": { $ref: "#/components/responses/Error" }
+        "415": { $ref: "#/components/responses/Error" }
+  /api/v1/me/stats:
+    get:
+      tags: [Profile]
+      summary: My page views and link clicks
+      security: [{ session: [] }]
+      parameters:
+        - { name: days, in: query, schema: { type: string, enum: ["7", "30"], default: "7" } }
+      responses:
+        "200": { description: Daily counts, totals and top links., content: { application/json: { schema: { $ref: "#/components/schemas/Stats" } } } }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+  /api/v1/me/export:
+    get:
+      tags: [Profile]
+      summary: Download all my data as JSON
+      description: Needs a sign-in from the last 10 minutes.
+      security: [{ session: [] }]
+      responses:
+        "200": { description: My data., content: { application/json: { schema: { type: object } } } }
+        "401": { $ref: "#/components/responses/Error" }
+  /api/v1/links:
+    get:
+      tags: [Links]
+      summary: List my links
+      security: [{ session: [] }]
+      responses:
+        "200": { description: My links in order., content: { application/json: { schema: { type: object, properties: { links: { type: array, items: { $ref: "#/components/schemas/Link" } } } } } } }
+        "401": { $ref: "#/components/responses/Error" }
+    post:
+      tags: [Links]
+      summary: Add a link
+      description: Up to 30 links per account. The target is checked for the link kind.
+      security: [{ session: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NewLink" }
+      responses:
+        "201": { description: Created., content: { application/json: { schema: { $ref: "#/components/schemas/Link" } } } }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+  /api/v1/links/order:
+    put:
+      tags: [Links]
+      summary: Set the order of all my links
+      description: Send every one of your link ids exactly once.
+      security: [{ session: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ids]
+              properties:
+                ids: { type: array, maxItems: 30, items: { type: string } }
+      responses:
+        "204": { description: Reordered. }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+  /api/v1/links/{id}:
+    parameters:
+      - { name: id, in: path, required: true, schema: { type: string } }
+    patch:
+      tags: [Links]
+      summary: Edit one of my links
+      description: The kind cannot change. Unknown fields are ignored. The new target is checked for the stored kind.
+      security: [{ session: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string, minLength: 1, maxLength: 60 }
+                target: { type: string, maxLength: 2048 }
+                message: { type: string, nullable: true, maxLength: 300 }
+                enabled: { type: boolean }
+                starts_at: { type: integer, nullable: true }
+                ends_at: { type: integer, nullable: true }
+      responses:
+        "200": { description: Updated., content: { application/json: { schema: { $ref: "#/components/schemas/Link" } } } }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+    delete:
+      tags: [Links]
+      summary: Delete one of my links
+      security: [{ session: [] }]
+      responses:
+        "204": { description: Deleted. }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+  /u/{username}:
+    get:
+      tags: [Public]
+      summary: The public page (HTML)
+      description: >-
+        The page people share, made on the server as plain HTML. Served from the site root, not under /api/v1.
+        Cached for 60 seconds with an ETag. Uppercase names redirect (301) to the lowercase address. Unknown,
+        reserved and banned names give a friendly 404 page. Sends its own Content-Security-Policy that allows
+        only the page's one small counting script.
+      parameters:
+        - { name: username, in: path, required: true, schema: { type: string } }
+      responses:
+        "200": { description: The page., content: { text/html: {} } }
+        "301": { description: Redirect to the lowercase address. }
+        "304": { description: Not changed since the ETag given in If-None-Match. }
+        "404": { description: No such page., content: { text/html: {} } }
+  /api/v1/u/{username}:
+    get:
+      tags: [Public]
+      summary: Public page data
+      description: Never includes the owner's email or internal ids. Cached for 60 seconds.
+      parameters:
+        - { name: username, in: path, required: true, schema: { type: string } }
+      responses:
+        "200": { description: The public page., content: { application/json: { schema: { $ref: "#/components/schemas/PublicPage" } } } }
+        "404": { $ref: "#/components/responses/Error" }
+  /api/v1/avatar/{key}:
+    get:
+      tags: [Public]
+      summary: A profile photo
+      parameters:
+        - { name: key, in: path, required: true, schema: { type: string } }
+      responses:
+        "200": { description: The photo., content: { image/jpeg: {}, image/png: {}, image/webp: {} } }
+        "404": { $ref: "#/components/responses/Error" }
+  /api/v1/track:
+    post:
+      tags: [Public]
+      summary: Count a page view or a link click
+      description: Send only page for a view, or page and link for a click. Stores counts only.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [page]
+              properties:
+                page: { type: string, maxLength: 40 }
+                link: { type: string }
+      responses:
+        "204": { description: Accepted. }
+        "400": { $ref: "#/components/responses/Error" }
+  /api/v1/report:
+    post:
+      tags: [Public]
+      summary: Report a page for abuse
+      description: Answers 202 whether or not the page exists.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [page, reason]
+              properties:
+                page: { type: string, maxLength: 40 }
+                reason: { type: string, minLength: 1, maxLength: 500 }
+      responses:
+        "202": { description: Received., content: { application/json: { schema: { $ref: "#/components/schemas/Ok" } } } }
+        "400": { $ref: "#/components/responses/Error" }
+components:
+  securitySchemes:
+    session:
+      type: apiKey
+      in: cookie
+      name: __Host-lb_session
+  responses:
+    Error:
+      description: Something is wrong with the request.
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+    Ok:
+      type: object
+      properties:
+        ok: { type: boolean }
+    Profile:
+      type: object
+      properties:
+        id: { type: string }
+        email: { type: string }
+        username: { type: string, nullable: true }
+        display_name: { type: string }
+        bio: { type: string }
+        avatar_url: { type: string, nullable: true }
+        theme: { type: string }
+        accent: { type: string, nullable: true }
+        button_shape: { type: string, enum: [pill, rounded, square] }
+        font_pair: { type: string, enum: [friendly, clean] }
+        bg_style: { type: string, enum: [solid, gradient, pattern] }
+        show_badge: { type: boolean }
+        created_at: { type: integer }
+    NewLink:
+      type: object
+      required: [title, target]
+      description: Every link needs a target. Linkbeam has no payment features. The optional coffee kind only links to the owner's own Buy Me a Coffee page.
+      properties:
+        kind: { type: string, enum: [url, whatsapp, coffee, call, email, map], default: url }
+        title: { type: string, minLength: 1, maxLength: 60 }
+        target: { type: string, maxLength: 2048, description: "http(s) address for url and map, or a plain address for map (becomes a map search link). https address on buymeacoffee.com or coff.ee (with a page name) for coffee. International number such as +2348012345678 (or starting 00) for whatsapp and call. Email address for email." }
+        message: { type: string, nullable: true, maxLength: 300 }
+        enabled: { type: boolean }
+        starts_at: { type: integer, nullable: true }
+        ends_at: { type: integer, nullable: true }
+    Link:
+      type: object
+      properties:
+        id: { type: string }
+        kind: { type: string }
+        title: { type: string }
+        target: { type: string }
+        message: { type: string, nullable: true }
+        position: { type: integer }
+        enabled: { type: boolean }
+        starts_at: { type: integer, nullable: true }
+        ends_at: { type: integer, nullable: true }
+    PublicPage:
+      type: object
+      properties:
+        username: { type: string }
+        display_name: { type: string }
+        bio: { type: string }
+        avatar_url: { type: string, nullable: true }
+        theme: { type: string }
+        accent: { type: string, nullable: true }
+        button_shape: { type: string, enum: [pill, rounded, square] }
+        font_pair: { type: string, enum: [friendly, clean] }
+        bg_style: { type: string, enum: [solid, gradient, pattern] }
+        show_badge: { type: boolean }
+        links:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              kind: { type: string }
+              title: { type: string }
+              target: { type: string }
+              message: { type: string, nullable: true }
+    Stats:
+      type: object
+      properties:
+        days: { type: integer }
+        totals:
+          type: object
+          properties:
+            views: { type: integer }
+            clicks: { type: integer }
+        daily:
+          type: array
+          items:
+            type: object
+            properties:
+              date: { type: string }
+              views: { type: integer }
+              clicks: { type: integer }
+        top_links:
+          type: array
+          items:
+            type: object
+            properties:
+              id: { type: string }
+              title: { type: string }
+              clicks: { type: integer }
