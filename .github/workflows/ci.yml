@@ -41,7 +41,7 @@ jobs:
       # Two browser test files check the built site, so build it first.
       - run: pnpm --filter @linkbeam/web build
       - run: pnpm e2e
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-traces
@@ -59,7 +59,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @linkbeam/e2e exec playwright install --with-deps chromium
       - run: pnpm lighthouse
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: lighthouse-results
